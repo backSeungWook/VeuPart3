@@ -1,10 +1,10 @@
-# Todo List 프로젝트
-<a href="https://github.com/HeropCode/Vue-Todo-app">Todo List 예제 프로젝트</a>
+# Todo List 프로젝트 환경구성
+<a href="https://github.com/HeropCode/Vue-Todo-app">Todo List 예제 프로젝트</a>   
 개발용 의존성 모듈 설치  
 패키지의 개발 시 사용될 의존성 모듈을 지정합니다.(배포 시 포함되지 않습니다)
 
 ## Webpack 설치 및 설정
-개발용 의존성 모듈
+<개발용 의존성 모듈>  
 webpack은 웹팩(Webpack)의 핵심 패키지이며,
 webpack-cli는 터미널에서 웹팩 명령(Commands)를 실행할 수 있게 해주는 도구입니다.
 ```
@@ -265,3 +265,55 @@ module.exports = {
 ## Vetur 확장 프로그램 설치
  Vue에 대한 자동완성 및 디버깅 등등 지원
  
+
+# Todo-List 프로젝트 라이브러리
+## LowDB or Lodash 설치
+```
+npm i lodash lowdb
+```
+lodash API : https://lodash.com/
+## ~~crypto-random-string~~
+~~자동적으로 중복되지 않음 문자열 생성
+옵션으로 { length:10} : 10개의 문자열로 생성  
+https://github.com/sindresorhus/crypto-random-string~~
+```
+npm i crypto-random-string
+```
+
+* webpack 5버전에서는 에러 발생하여 적용 못시킴...
+```js
+//const crypto = require("crypto");
+//console.log(crypto.randomBytes(20).toString('hex'))
+```
+
+## Moment.js or Day.js
+Day.js는 Moment.js의 경량화 버전.
+```
+npm i dayjs
+```
+
+## 양식요소의 구조가 똑같을 경우 v-if로 표시 여부 할 때 
+기존 양식요소들이 포커스 되거나 사라진 요소의 함수가 실행 될 수가 있음  
+그럴 때는 key라는 키워드를 사용하여 고유의 값을 지정 해주어야 함.
+
+## ref
+```js
+//해당 요소의 참조값 지정
+<input ref="참조값" type='text'>
+//해당 스크립트에서 요소 참조값 가져올 때 
+this.$refs.참조값
+```
+## Vue.nextTick
+다음 DOM 업데이트 사이클 이후 실행 하는 콜백을 연기
+즉. 화면에 렌더링 후 함수 실행.
+```js
+this.$nextTick(() =>{
+  this.$refs.titleInput.focus()
+})
+```
+
+## Vue.delete
+객체의 속성을 삭제, 객체가 반응형이면 뷰 업데이트를 발생
+```js
+this.$delete(target,Index)
+```
