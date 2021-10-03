@@ -16,7 +16,11 @@ module.exports = (env,opts) =>
   const config = 
   {
     resolve:{
-      extensions:['.vue','.js'] //생략 할 확장자들 
+      extensions:['.vue','.js'], //생략 할 확장자들
+      alias:{
+        '~':path.join(__dirname),
+        'scss':path.join(__dirname,'./scss')
+      }
     },
     //진입점
     entry:{

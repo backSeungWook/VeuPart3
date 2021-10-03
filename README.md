@@ -264,10 +264,12 @@ module.exports = {
 
 ## Vetur 확장 프로그램 설치
  Vue에 대한 자동완성 및 디버깅 등등 지원
- 
+
+<br/><br/>
 
 # Todo-List 프로젝트 라이브러리
 ## LowDB or Lodash 설치
+모듈성, 성능 및 추가 기능을 제공하는 최신 JavaScript 유틸리티 라이브러리  
 ```
 npm i lodash lowdb
 ```
@@ -317,3 +319,163 @@ this.$nextTick(() =>{
 ```js
 this.$delete(target,Index)
 ```
+## scroll-to npm
+https://www.npmjs.com/package/scroll-to   
+스크롤 
+```
+npm i scroll-to
+```
+```js
+//선언
+import scrollTo from 'scroll-to'
+ scrollTo(0,0,{ //X,Y,개체
+        ease:'linear',//linear 동일한 속도
+        duration:1000//기본값이 1초
+      })
+```
+## VUE router
+싱글 페이지 애플리케이션(SPA) 라우터 구성을 위해 Vue Router 사용
+API https://router.vuejs.org/kr/
+```
+npm i vue-router
+```
+main.js -> /route/index.js 라우터 연결
+http://localhost:8080/#/todos 에서 중간에 `#`이 들어간 이유는
+router 기본 설정이 헤쉬모드 이기 때문.  
+Hash(#): 기본 값 ex) http://localhost:8080/`#`/todos  
+History: <a href="https://router.vuejs.org/kr/guide/essentials/history-mode.html#%E1%84%89%E1%85%A5%E1%84%87%E1%85%A5-%E1%84%89%E1%85%A5%E1%86%AF%E1%84%8C%E1%85%A5%E1%86%BC-%E1%84%8B%E1%85%A8%E1%84%8C%E1%85%A6">History 모드</a>
+
+```js
+this.$router.push('이동할 페이지')
+```
+
+## $route
+해당 url에 대한 정보를 가지고 있음
+$route.query : 해당 페이지의 파라미터 값 ex) .html?data1=111&data2=222 => data1:111 , data2:222  
+$route.params 값으로 특정 탭 선택 지정 이벤트 기능 구현 router/index.js 에 각각의 페이지별 route 설정 확인.
+
+```js
+children:[
+      {
+        path:':id'//:파라미터 ,id는파라미터 이름
+      }
+    ]
+//params:{id:"입력한 값"}
+```
+
+
+## Webpack을 이용한 절대경로 별명 설정
+```js
+//webpack.config.js
+const config = 
+  {
+    resolve:{
+      //...
+      alias:{
+        '~':path.join(__dirname)//~ : 사용자 정의 이름
+      }
+    }
+  }
+```
+
+<br/><br/>
+
+# Vuex
+https://vuex.vuejs.org/kr/  
+Vue.js 애플리케이션에 대한 상태 관리 패턴 + 라이브러리  
+애플리케이션의 모든 컴포넌트에 대한 중앙 집중식 저장소 역할을 하며 예측 가능한 방식으로 상태를 변경할 수 있습니다  
+설치  
+```
+npm i vuex
+```
+
+
+
+
+# 보안취약점 모듈
+보안취약점 모듈들을 자동으로 업데이트
+```
+npm audit fix
+```
+
+## <a href="https://vuex.vuejs.org/kr/guide/modules.html#%E1%84%82%E1%85%A6%E1%84%8B%E1%85%B5%E1%86%B7%E1%84%89%E1%85%B3%E1%84%91%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%89%E1%85%B3">네임스페이스</a>
+
+모듈이 독립적이거나 재사용되기를 원한다면, namespaced: true라고 네임스페이스에 명시하면 됩니다.  
+모듈이 등록될 때, 해당 모듈의 모든 getter, 액션/변이는 자동으로 등록된 모듈의 경로를 기반으로 네임스페이스가 지정됩니다
+
+## actions , mutations 차이
+이름|기능|로직|state
+--|--|--|--
+actions|Methods|일반 로직(`비동기O`)|변경 불가능
+mutations|Methods|실제 값을 변경 할 때(`비동기X`)|변경 가능
+
+## actions 옵션
+```js
+//state=state / getters=getters / commit=mutations / dispatch=actions
+actions:{
+  someAction1({state,getters,commit,dispatch},payload){
+    state.a=789//Error actions 에서는 직접적으로 값 변경이 불가능.
+    commit('mutations함수이름','전달할 내용')
+  },
+  someAction2(context,payload){
+    context.commit('mutations함수이름','전달할 내용')
+    context.dispatch('actions함수이름','전달할 내용')
+  }
+
+}
+```
+
+## mapState, mapGetters
+index.js에서 가져올 때는 첫번째 인수 작성 X
+```js
+import { mapState, mapGetters } from 'vuex'
+
+todos(){
+  return this.$store.state.todoApp.todos
+},
+total(){
+  return this.$store.getters.todoApp.total
+},
+activeCount(){
+  return this.$store.getters.todoApp.activeCount
+},
+```
+==>
+```js
+//Helpers
+//1: namespaced 이름 2: 맵핑 할 이름(배열)
+//... : 전개 연산자
+...mpState('todoApp',[
+  'todos'//$store.state.todoApp.todos
+]),
+...mapGetters('todoApp',[
+  'total',//$store.getters.todoApp.total
+  'activeCount',
+  'completedCount'
+]),
+```
+
+## mapMutations, mapActions
+index.js에서 가져올 때는 첫번째 인수 작성 X
+```js
+import { mapMutations, mapActions } from 'vuex'
+initDB(){
+  return this.$store.dispatch('todoApp/initDB')
+},
+updateTodo(){
+  this.$store.commit('todoApp/updateTodo)
+}
+```
+==>
+```js
+//Helpers
+//1: namespaced 이름 2: 맵핑 할 이름(배열)
+//... : 전개 연산자
+...mapMutatuions('todoApp',[
+  'updateTodo'
+]),
+...mapActions('todoApp',[
+  'initDB'
+])
+```
+# Directory

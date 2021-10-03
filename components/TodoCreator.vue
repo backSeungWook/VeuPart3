@@ -1,6 +1,8 @@
 <template>
   <div>
-    <button @click="createTodo">추가</button>
+    <button @click="createTodo">
+      <i class="material-icons">add</i>
+    </button>
     <input 
      :value="title"
      :placeholder="placeholder"
@@ -25,10 +27,18 @@ export default {
         this.title = this.title.trim()
         return
       }
-      this.$emit('create-todo',this.title)//$emit : 부모로 create-todo이름의 title데이터 전달 
+      //$emit : 부모로 create-todo이름의 title데이터 전달 
+      //this.$emit('create-todo',this.title) 
+      //vuex store 사용으로 사용 안함.
+      this.$store.dispatch('todoApp/createTodo',this.title)//createTodo만 사용 하면 store/index.js에 있는 actions 를 참조
       this.title=''
-
+      
+      this.$nextTick(() =>{
+        window.scrollTo(0,document.body.scrollHeight)
+      })
+      
     }
   }
 }
 </script>
+
