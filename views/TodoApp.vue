@@ -134,6 +134,7 @@ export default {
   watch:{
     $route(){
       //this.$store.commit('todoApp/updateFilter',this.$$route.params.id)
+      console.log(this.$route)
       this.updateFilter(this.$route.params.id)
     }
   },
