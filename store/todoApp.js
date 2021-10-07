@@ -53,6 +53,7 @@ export default {
   //Methods
   //실제 값을 변경 할 때(비동기X)
   //state 변경 할수 있음
+  //기본 인자는 state,{payload}
   mutations:{
     assignDB(state,db){
       state.db = db
@@ -99,6 +100,7 @@ export default {
   //Methods
   // 일반 로직(비동기O)
   //state 변경 할 수 없음.
+  //인자: { rootState, state, dispatch, commit },{payload}
   actions:{
     //함수 정의시 매개 값은 2개 밖에 안댐.
     //state: state ,commit:mutations
