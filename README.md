@@ -333,7 +333,7 @@ import scrollTo from 'scroll-to'
         duration:1000//기본값이 1초
       })
 ```
-## VUE router
+## `VUE router`
 싱글 페이지 애플리케이션(SPA) 라우터 구성을 위해 Vue Router 사용
 API https://router.vuejs.org/kr/
 ```
